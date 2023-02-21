@@ -15,7 +15,7 @@ const NoteCard: Component<{text: string, color: string, id: string}> = (props) =
       return [...array.slice(0, index), ...array.slice(index + 1)];
     }    
     return (
-        <div class={"bg-" + color() + "-400 rounded-sm my-3 text-md font-mono w-min min-w-fit"}>
+        <div class={"bg-" + color() + "-400 rounded-sm m-5 text-md font-mono w-min min-w-fit"}>
             <h2 class="m-2 w-56 text-center">{text()}</h2>
             <div class="grid grid-flow-row">
               <button class="bg-green-500 rounded-sm shadow-sm shadow-green-800 m-3"onClick={() => {
@@ -32,7 +32,7 @@ const NoteCard: Component<{text: string, color: string, id: string}> = (props) =
                 console.log(notes().findIndex(note => note.id === id))
                 setNotes(removeIndex(notes(), notes().findIndex(notes => notes.id === id)))
                 }}>
-                  <h1 class="m-0.5">change text to short</h1>
+                  <h1 class="m-0.5">delete note</h1>
               </button>
             </div>
         </div>

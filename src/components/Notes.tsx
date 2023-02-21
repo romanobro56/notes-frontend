@@ -11,7 +11,7 @@ const Notes: Component = () => {
         "this is a long text. I dont know why anyone would want to write a note this long, but we must cover all use cases."
     ]
     onMount( () => {
-        for (var i=0;i<15;i++){
+        for (var i=0;i<10;i++){
             let note = {
                 text: noteTexts[Math.floor(Math.random()*noteTexts.length)],
                 color: noteColors[Math.floor(Math.random()*noteColors.length)],
@@ -22,7 +22,7 @@ const Notes: Component = () => {
       console.log(notes());
   });
   return (
-      <div class="grid grid-cols-4 auto-cols-auto">
+      <div class="grid grid-cols-4 auto-cols-auto mx-5">
           <For each={notes()}>{(note, i) =>
                   <NoteCard text={note.text} color={note.color} id={note.id} />
           }</For>

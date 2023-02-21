@@ -8,7 +8,7 @@ const index: Component = () => {
       <div class="flex flex-row w-full justify-center my-8">
         <AddNote />
       </div>
-      <div class="flex flex-col justify-between w-full">
+      <div class="flex flex-col justify-between w-full mx-5">
         <Notes />
       </div>
     </div>
