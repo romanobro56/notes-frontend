@@ -1,6 +1,7 @@
 import { Component, createSignal, onMount, For } from "solid-js";
 import NoteCard, { Note } from './NoteCard'
 
+
 export const [notes, setNotes] = createSignal([] as Note[]);
 
 const Notes: Component = () => {
