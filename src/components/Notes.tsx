@@ -5,11 +5,11 @@ import NoteCard, { Note } from './NoteCard'
 export const [notes, setNotes] = createSignal([] as Note[]);
 
 const Notes: Component = () => {
-    const noteColors = ["blue", "red", "green", "yellow", "gray"];
+    const noteColors = ["bg-blue-400", "bg-red-400", "bg-green-400", "bg-yellow-400", "bg-gray-400"];
     const noteTexts = [
         "this is a short text",
         "this is a medium text. A short description that the user would input",
-        "this is a long text. I dont know why anyone would want to write a note this long, but we must cover all use cases."
+        "this is a long text. I dont know why anyone would want to write a note this long, but we must cover all use cases. AAAAAAAAAAAAAAAAAAAA! open source more like source"
     ]
     onMount( () => {
         for (var i=0;i<10;i++){
@@ -20,14 +20,13 @@ const Notes: Component = () => {
             }
           setNotes([note, ...notes()]);
       }
-      console.log(notes());
   });
   return (
-      <div class="grid grid-cols-4 auto-cols-auto mx-5">
-          <For each={notes()}>{(note, i) =>
-                  <NoteCard text={note.text} color={note.color} id={note.id} />
-          }</For>
-      </div>
+    <div class="grid grid-cols-4 auto-cols-auto mx-5">
+        <For each={notes()}>{(note, i) =>
+            <NoteCard text={note.text} color={note.color} id={note.id} />}
+        </For>
+    </div>
   )
 }
 
