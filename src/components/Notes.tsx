@@ -21,7 +21,7 @@ const Notes: Component = () => {
       }
   });
   return (
-    <div class="mx-5 masonry-with-columns">
+    <div class="mx-5 columns-7">
         <For each={notes()}>{(note, i) =>
             <NoteCard text={note.text} color={note.color} id={note.id} />}
         </For>

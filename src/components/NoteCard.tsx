@@ -35,7 +35,7 @@ const NoteCard: Component<{ text: string, color: string, id: string }> = (props)
     setScrollHeight(getMultilineStringHeight(text()))
   })
   return (
-    <div class={color() + " rounded-sm m-2 p-2 text-md font-mono w-min min-w-fit min-h-fit"}>
+    <div class={color() + " rounded-sm m-2 p-2 text-md font-mono w-min h-max break-inside-avoid"}>
       <textarea id={id} class={"m-2 w-56 text-center min-h-min rounded-sm " + color()} 
         onInput={(e) =>{
           setScrollHeight(getMultilineStringHeight(e.currentTarget.value))
@@ -51,8 +51,8 @@ const NoteCard: Component<{ text: string, color: string, id: string }> = (props)
           "min-height": "24px"
         }}
       />
-      <div class="grid grid-flow-row">
-        <div class="flex flex-row space-x-6">
+      <div class="flex flex-col">
+        <div class="flex flex-row space-x-6 self-center">
           <button class="bg-red-400 rounded-full w-3 h-3 border-2 border-white border-spacing-4"
             onClick={() => {
               setColor("bg-red-400")
@@ -79,7 +79,7 @@ const NoteCard: Component<{ text: string, color: string, id: string }> = (props)
             }}
           /> 
         </div>
-        <button class="bg-red-400 rounded-sm shadow-sm w-48 shadow-yellow-800 m-3"
+        <button class="bg-red-400 self-center rounded-sm shadow-sm w-48 shadow-yellow-800 m-3"
           onClick={() => {
             console.log(notes().findIndex(note => note.id === id))
             setNotes(removeIndex(notes(), notes().findIndex(notes => notes.id === id)))
