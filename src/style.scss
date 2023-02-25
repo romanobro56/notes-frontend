@@ -1,0 +1,9 @@
+.masonry-with-columns {
+  columns: 7 240px;
+  column-gap: 8px;
+  div {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+  } 
+}

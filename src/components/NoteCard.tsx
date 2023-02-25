@@ -52,7 +52,34 @@ const NoteCard: Component<{ text: string, color: string, id: string }> = (props)
         }}
       />
       <div class="grid grid-flow-row">
-        <button class="bg-red-400 rounded-sm shadow-sm shadow-yellow-800 m-3"
+        <div class="flex flex-row space-x-6">
+          <button class="bg-red-400 rounded-full w-3 h-3 border-2 border-white border-spacing-4"
+            onClick={() => {
+              setColor("bg-red-400")
+            }}
+           />
+          <button class="bg-blue-400 rounded-full w-3 h-3 border-2 border-white border-spacing-4"
+            onClick={() => {
+              setColor("bg-blue-400")
+            }}
+          />   
+          <button class="bg-orange-400 rounded-full w-3 h-3 border-2 border-white border-spacing-4"
+            onClick={() => {
+              setColor("bg-orange-400")
+            }}
+          /> 
+          <button class="bg-purple-400 rounded-full w-3 h-3 border-2 border-white border-spacing-4"
+            onClick={() => {
+              setColor("bg-purple-400")
+            }}
+          /> 
+          <button class="bg-gray-400 rounded-full w-3 h-3 border-2 border-white border-spacing-4"
+            onClick={() => {
+              setColor("bg-gray-400")
+            }}
+          /> 
+        </div>
+        <button class="bg-red-400 rounded-sm shadow-sm w-48 shadow-yellow-800 m-3"
           onClick={() => {
             console.log(notes().findIndex(note => note.id === id))
             setNotes(removeIndex(notes(), notes().findIndex(notes => notes.id === id)))

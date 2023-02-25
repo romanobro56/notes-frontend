@@ -21,7 +21,7 @@ const Notes: Component = () => {
       }
   });
   return (
-    <div class="grid grid-flow-col auto-cols-max mx-5">
+    <div class="mx-5 masonry-with-columns">
         <For each={notes()}>{(note, i) =>
             <NoteCard text={note.text} color={note.color} id={note.id} />}
         </For>

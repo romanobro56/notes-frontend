@@ -14,6 +14,7 @@ import {
   Title,
 } from "solid-start";
 import "./root.css";
+import "./style.scss"
 
 export default function Root() {
   return (
