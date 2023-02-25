@@ -1,5 +1,5 @@
-import { Component, createSignal, createEffect} from 'solid-js';
-import {notes, setNotes} from './Notes'
+import { Component, createSignal, onMount } from 'solid-js';
+import { notes, setNotes } from './Notes'
 
 export type Note = {
   text: string,
@@ -7,42 +7,61 @@ export type Note = {
   id: string
 }
 
-const NoteCard: Component<{text: string, color: string, id: string}> = (props) => {
-    const [color, setColor] = createSignal(props.color)
-    const [text, setText] = createSignal(props.text)
-    const id = props.id
-    function removeIndex<T>(array: readonly T[], index: number): T[] {
-      return [...array.slice(0, index), ...array.slice(index + 1)];
-    }
-    return (
-        <div class={color() +" rounded-sm m-2 p-2 text-md font-mono w-min min-w-fit min-h-fit"}>
-            <textarea style="resize:none" class="m-2 w-56 text-center min-h-fit" value={text()}
-              onFocusOut={(e) =>{
-                setText(e.currentTarget.value || "")
-              }} />
-            <div class="grid grid-flow-row">
-              <button class="bg-green-500 rounded-sm shadow-sm shadow-green-800 m-3"
-                onClick={() => {
-                  setColor("bg-green-800");
-                }}>
-                <h1 class="m-0.5">change to green</h1>
-              </button>
-              <button class="bg-yellow-400 rounded-sm shadow-sm shadow-yellow-800 m-3"
-                onClick={() => {
-                  setText("this now a short note");
-                }}>
-                <h1 class="m-0.5">change text to short</h1>
-              </button>
-              <button class="bg-red-400 rounded-sm shadow-sm shadow-yellow-800 m-3"
-                onClick={() => {
-                  console.log(notes().findIndex(note => note.id === id))
-                  setNotes(removeIndex(notes(), notes().findIndex(notes => notes.id === id)))
-                }}>
-                <h1 class="m-0.5">delete note</h1>
-              </button>
-            </div>
-        </div>
-    )
+function getMultilineStringHeight(str: string) {
+  var el = document.createElement('div');
+  el.style.position = 'absolute';
+  el.style.visibility = 'hidden';
+  el.style.width = '224px';
+  el.style.height = 'auto';
+  el.style.whiteSpace = 'pre-wrap';
+  el.style.font = "ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace";
+  el.innerHTML = str;
+  document.body.appendChild(el);
+  var height = el.offsetHeight;
+  document.body.removeChild(el);
+  return height;
+}
+
+export function removeIndex<T>(array: readonly T[], index: number): T[] {
+  return [...array.slice(0, index), ...array.slice(index + 1)];
+}
+
+const NoteCard: Component<{ text: string, color: string, id: string }> = (props) => {
+  const [color, setColor] = createSignal(props.color)
+  const [text, setText] = createSignal(props.text)
+  const id = props.id
+  const [scrollHeight, setScrollHeight] = createSignal<number>(document.getElementById(id)?.scrollHeight || 48)
+  onMount(()=>{
+    setScrollHeight(getMultilineStringHeight(text()))
+  })
+  return (
+    <div class={color() + " rounded-sm m-2 p-2 text-md font-mono w-min min-w-fit min-h-fit"}>
+      <textarea id={id} class={"m-2 w-56 text-center min-h-min rounded-sm " + color()} 
+        onInput={(e) =>{
+          setScrollHeight(getMultilineStringHeight(e.currentTarget.value))
+        }}
+        value={text()}
+        onFocusOut={(e) => {
+          setText(e.currentTarget.value)
+        }}
+        style={{
+          "resize": "none",
+          "height": `${scrollHeight()}px`,
+          "overflow": "hidden",
+          "min-height": "24px"
+        }}
+      />
+      <div class="grid grid-flow-row">
+        <button class="bg-red-400 rounded-sm shadow-sm shadow-yellow-800 m-3"
+          onClick={() => {
+            console.log(notes().findIndex(note => note.id === id))
+            setNotes(removeIndex(notes(), notes().findIndex(notes => notes.id === id)))
+          }}>
+          <h1 class="m-0.5">delete note</h1>
+        </button>
+      </div>
+    </div>
+  )
 }
 
 export default NoteCard;

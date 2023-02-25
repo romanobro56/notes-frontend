@@ -1,7 +1,6 @@
 import { Component, createSignal, onMount, For } from "solid-js";
 import NoteCard, { Note } from './NoteCard'
 
-
 export const [notes, setNotes] = createSignal([] as Note[]);
 
 const Notes: Component = () => {
@@ -16,13 +15,13 @@ const Notes: Component = () => {
             let note = {
                 text: noteTexts[Math.floor(Math.random()*noteTexts.length)],
                 color: noteColors[Math.floor(Math.random()*noteColors.length)],
-                id: Math.random().toString(36).replace(/[^a-z]+/g, '').slice(2, 10)
+                id: Math.random().toString(36).slice(2, 13)
             }
           setNotes([note, ...notes()]);
       }
   });
   return (
-    <div class="grid grid-cols-4 auto-cols-auto mx-5">
+    <div class="grid grid-flow-col auto-cols-max mx-5">
         <For each={notes()}>{(note, i) =>
             <NoteCard text={note.text} color={note.color} id={note.id} />}
         </For>

@@ -9,7 +9,7 @@ const AddNote: Component = () => {
             [{
                 text: noteText,
                 color: color,
-                id: Math.random().toString(36).replace(/[^a-z]+/g, '').slice(2, 10)
+                id: Math.random().toString(36).replace(/[^a-z]+/g, '').slice(2, 16)
             }, ...notes()]
         )
     }
@@ -21,10 +21,10 @@ const AddNote: Component = () => {
             </input>
             <select name="color select" value={noteColor()} onInput={e => setNoteColor(e.currentTarget.value)
             }>
-                <option value="green">Green</option>
-                <option value="blue">Blue</option>
-                <option value="red">Red</option>
-                <option value="yellow">Yellow</option>
+                <option value="bg-green-400">Green</option>
+                <option value="bg-blue-400">Blue</option>
+                <option value="bg-red-400">Red</option>
+                <option value="bg-yellow-400">Yellow</option>
             </select>
             <button onClick={() => {
                 submitNote(noteInput(),noteColor())
