@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.note-text::placeholder {
+    opacity: 0.5;
+    color: black;
+    font-style: italic;
+}

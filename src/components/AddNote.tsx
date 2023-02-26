@@ -39,12 +39,16 @@ const AddNote: Component = () => {
                             setEmptyNoteWarning("you must type a note to submit it!")
                             return
                         }
-                        submitNote(noteInput(),noteColor())
+                        if(!noteColor()){
+                            submitNote(noteInput(),"bg-gray-300")
+                        } else {
+                            submitNote(noteInput(),noteColor())
+                        }
                 }}>
                     Submit Note
                 </button>
             </div>
-            <div class="under">
+            <div class="under h-6">
                 <p>{emptyNoteWarning()}</p>
             </div>
         </div>

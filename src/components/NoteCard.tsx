@@ -35,8 +35,8 @@ const NoteCard: Component<{ text: string, color: string, id: string }> = (props)
     setScrollHeight(getMultilineStringHeight(text()))
   })
   return (
-    <div class={color() + " rounded-sm m-2 p-2 text-md font-mono w-min h-max break-inside-avoid"}>
-      <textarea id={id} class={"m-2 w-56 text-center min-h-min rounded-sm " + color()} 
+    <div class={color() + " rounded-sm m-2 p-2 text-md font-mono w-full h-max break-inside-avoid"}>
+      <textarea id={id} class={"note-text m-1 w-56 text-center min-h-min rounded-sm " + color()} 
         onInput={(e) =>{
           setScrollHeight(getMultilineStringHeight(e.currentTarget.value))
         }}
@@ -50,6 +50,7 @@ const NoteCard: Component<{ text: string, color: string, id: string }> = (props)
           "overflow": "hidden",
           "min-height": "24px"
         }}
+        placeholder="Empty Note"
       />
       <div class="flex flex-col">
         <div class="flex flex-row space-x-6 self-center">
