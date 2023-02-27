@@ -5,7 +5,7 @@ import Notes from '~/components/Notes';
 const index: Component = () => {
   return (
     <div>
-      <div class="flex flex-row w-full justify-center my-8">
+      <div class="flex flex-row w-full justify-center mt-6">
         <AddNote />
       </div>
       <div class="w-full">

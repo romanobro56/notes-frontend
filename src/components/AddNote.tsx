@@ -16,8 +16,8 @@ const AddNote: Component = () => {
     }
     return (
         <div class="flex flex-col">
-            <div class="flex flex-row">
-                <input type='text' placeholder='Add Note...' 
+            <div class="flex flex-row border-2 border-black rounded-md py-1 px-2">
+                <input type='text' class="outline-none" placeholder='Add Note...' 
                     value={noteInput()} 
                     onInput={(e) => {
                         setNoteInput(e.currentTarget.value)
@@ -48,7 +48,7 @@ const AddNote: Component = () => {
                     Submit Note
                 </button>
             </div>
-            <div class="under h-6">
+            <div class="under h-6 text-center ">
                 <p>{emptyNoteWarning()}</p>
             </div>
         </div>

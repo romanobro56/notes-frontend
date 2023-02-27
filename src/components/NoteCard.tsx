@@ -10,11 +10,14 @@ export type Note = {
 function getMultilineStringHeight(str: string) {
   var el = document.createElement('div');
   el.style.position = 'absolute';
-  el.style.visibility = 'hidden';
+  el.style.visibility = 'false';
   el.style.width = '224px';
   el.style.height = 'auto';
-  el.style.whiteSpace = 'pre-wrap';
-  el.style.font = "ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace";
+  el.style.fontSize = '1rem';
+  el.style.lineHeight = '1.5rem';
+  el.style.whiteSpace = 'normal';
+  el.style.textAlign = "center"
+  el.style.font = "menlo"
   el.innerHTML = str;
   document.body.appendChild(el);
   var height = el.offsetHeight;
@@ -35,10 +38,11 @@ const NoteCard: Component<{ text: string, color: string, id: string }> = (props)
     setScrollHeight(getMultilineStringHeight(text()))
   })
   return (
-    <div class={color() + " rounded-sm m-2 p-2 text-md font-mono w-full h-max box-border inline-block break-inside-avoid note"}>
+    <div class={color() + " rounded-sm p-2 text-md w-full h-max box-border inline-block break-inside-avoid note"}>
       <textarea id={id} class={"note-text m-1 w-56 text-center min-h-min rounded-sm " + color()} 
         onInput={(e) =>{
           setScrollHeight(getMultilineStringHeight(e.currentTarget.value))
+          console.log(scrollHeight())
         }}
         value={text()}
         onFocusOut={(e) => {
@@ -48,11 +52,12 @@ const NoteCard: Component<{ text: string, color: string, id: string }> = (props)
           "resize": "none",
           "height": `${scrollHeight()}px`,
           "overflow": "hidden",
-          "min-height": "24px"
+          "min-height": "24px",
+          "font": "menlo"
         }}
         placeholder="Empty Note"
       />
-      <div class="flex flex-col">
+      <div class="flex flex-col note-buttons">
         <div class="flex flex-row space-x-6 self-center">
           <button class="bg-red-400 rounded-full w-3 h-3 border-2 border-white border-spacing-4"
             onClick={() => {
