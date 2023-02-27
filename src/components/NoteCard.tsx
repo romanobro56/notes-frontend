@@ -35,7 +35,7 @@ const NoteCard: Component<{ text: string, color: string, id: string }> = (props)
     setScrollHeight(getMultilineStringHeight(text()))
   })
   return (
-    <div class={color() + " rounded-sm m-2 p-2 text-md font-mono w-full h-max break-inside-avoid"}>
+    <div class={color() + " rounded-sm m-2 p-2 text-md font-mono w-full h-max box-border inline-block break-inside-avoid note"}>
       <textarea id={id} class={"note-text m-1 w-56 text-center min-h-min rounded-sm " + color()} 
         onInput={(e) =>{
           setScrollHeight(getMultilineStringHeight(e.currentTarget.value))
