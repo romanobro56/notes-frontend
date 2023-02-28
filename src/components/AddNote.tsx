@@ -1,4 +1,4 @@
-import { Component, createSignal } from 'solid-js';
+import { Component, createSignal, onMount } from 'solid-js';
 import {notes, setNotes} from './Notes'
 
 const AddNote: Component = () => {
@@ -14,6 +14,9 @@ const AddNote: Component = () => {
             }, ...notes()]
         )
     }
+    onMount(() =>{
+        setNoteColor("bg-gray-300")
+    })
     return (
         <div class="flex flex-col">
             <div class="flex flex-row border-2 border-black rounded-md py-1 px-2">
@@ -26,14 +29,16 @@ const AddNote: Component = () => {
                         }
                 }}>
                 </input>
-                <select name="color select" value={noteColor()} onInput={e => setNoteColor(e.currentTarget.value)
-                }>
-                    <option value="bg-green-400">Green</option>
-                    <option value="bg-blue-400">Blue</option>
-                    <option value="bg-red-400">Red</option>
-                    <option value="bg-yellow-400">Yellow</option>
+                <select name="color select" value={noteColor()} class={"rounded-md mr-1 " + noteColor()}
+                    onInput={e => setNoteColor(e.currentTarget.value)
+                }>  
+                    <option class="bg-gray-300" value="bg-gray-300"> Select Color </option>
+                    <option class="bg-green-400 rounded-sm" value="bg-green-400">Green</option>
+                    <option class="bg-blue-400 rounded-sm" value="bg-blue-400">Blue</option>
+                    <option class="bg-red-400 rounded-sm" value="bg-red-400">Red</option>
+                    <option class="bg-yellow-400 rounded-sm" value="bg-yellow-400">Yellow</option>
                 </select>
-                <button class="rounded-md bg-slate-500 font-sans p-2"
+                <button class="rounded-md bg-slate-500 font-sans p-2 hover:bg-slate-700 hover:text-gray-200"
                     onClick={() => {
                         if(!noteInput()){
                             setEmptyNoteWarning("you must type a note to submit it!")
