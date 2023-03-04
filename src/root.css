@@ -49,3 +49,12 @@
     margin: 0 0 10px;
     column-fill: auto;
 }
+
+body {
+    overflow-x: hidden;
+}
+
+.login {
+    overflow-y: hidden;
+}
+
