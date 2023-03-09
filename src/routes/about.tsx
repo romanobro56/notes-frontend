@@ -1,4 +1,4 @@
- import { Component } from 'solid-js';
+import { Component } from 'solid-js';
 import MenuBar from '~/components/MenuBar';
  
  const about: Component = () => {

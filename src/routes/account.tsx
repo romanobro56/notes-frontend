@@ -2,16 +2,7 @@ import { createSignal, createEffect } from "solid-js";
 import { createCookieSessionStorage, useParams, useRouteData } from "solid-start";
 import { createServerData$, redirect } from "solid-start/server";
 import MenuBar from "~/components/MenuBar";
-import { getUser } from "~/db/controllers/user";
 
-export function routeData(){
-  return createServerData$(async (_, { request }) =>{
-    if (await getUser(request)) {
-      throw redirect("/")
-    }
-    return {};
-  })
-}
 
 function validateUsername(username: unknown) {
   if (typeof username !== "string" || username.length < 3) {
@@ -26,7 +17,6 @@ function validatePassword(password: unknown) {
 }
 
 export default function Login(){
-  const data = useRouteData<typeof routeData>()
   const params = useParams()
 
   return(
