@@ -5,14 +5,39 @@ const AddNote: Component = () => {
     const [noteInput, setNoteInput ] = createSignal("")
     const [noteColor, setNoteColor] = createSignal("")
     const [emptyNoteWarning, setEmptyNoteWarning] = createSignal("")
-    const submitNote = (noteText: string, color: string) =>{
+    const submitNote = async (noteText: string, color: string) =>{
+        const token = localStorage.getItem("token")
+        await fetch("http://localhost:3009/users/getUser", {
+            method: "GET",
+            headers:{
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+            redirect: "follow"
+        })
+        .then(response => response.json())
+        .then(data => {
+            localStorage.setItem("noteNum", JSON.stringify({noteNum: data.noteNum}))
+        })
         setNotes(
             [{
                 text: noteText,
                 color: color,
-                id: Math.random().toString(36).replace(/[^a-z]+/g, '').slice(2, 16)
+                id: JSON.parse(localStorage.getItem("noteNum"))
             }, ...notes()]
         )
+        await fetch("http://localhost:3009/notes/createNote", {
+            method: "POST",
+            headers:{
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+            body:JSON.stringify({
+                contents: noteText,
+                color: color
+            }),
+            redirect: "follow"
+        })
     }
     onMount(() =>{
         setNoteColor("bg-gray-300")

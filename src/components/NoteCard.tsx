@@ -1,10 +1,10 @@
-import { Component, createSignal, onMount } from 'solid-js';
+import { Component, createEffect, createSignal } from 'solid-js';
 import { notes, setNotes } from './Notes'
 
 export type Note = {
   text: string,
   color: string
-  id: string
+  id: number
 }
 // Note: the elements needed to be able to display note on screen
 // text, color and id are destructured as props
@@ -34,7 +34,7 @@ export function removeIndex<T>(array: readonly T[], index: number): T[] {
 }
 // removes item at index of array of type any by returning new array
 
-const NoteCard: Component<{ text: string, color: string, id: string }> = (props) => {
+const NoteCard: Component<{ text: string, color: string, id: number }> = (props) => {
   const [color, setColor] = createSignal(props.color)
   const [text, setText] = createSignal(props.text)
   const id = props.id
@@ -50,11 +50,30 @@ const NoteCard: Component<{ text: string, color: string, id: string }> = (props)
   const [scrollHeight, setScrollHeight] = createSignal<number>(getMultilineStringHeight(text()) || 48)
   //set the height of the editable text box
   //this needs to be done because the text box does not auto resize but rather wants to scroll
-
+  createEffect(async () =>{
+    const token = localStorage.getItem("token")
+    await fetch("http://localhost:3009/notes/" + id, {
+      method: "PUT",
+      body: JSON.stringify({
+        newContents: text(),
+        newColor: color(),
+        completed: false
+      }),
+      headers: {
+        "Content-Type" : "application/json",
+        "Authorization": "Bearer " + token,
+      },
+      redirect: "follow"
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+    })
+  })
   return (
     <div class={color() + " rounded-sm p-2 text-md w-full h-max box-border inline-block break-inside-avoid note"}>
       <div class={"note-container " + noteVisibility()}>
-        <textarea id={id} class={"note-text m-1 w-56 text-center min-h-min rounded-sm " + color()} 
+        <textarea id={"" + id} class={"note-text m-1 w-56 text-center min-h-min rounded-sm " + color()} 
           onInput={(e) =>{
             setScrollHeight(getMultilineStringHeight(e.currentTarget.value))
           }}

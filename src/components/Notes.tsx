@@ -4,24 +4,34 @@ import NoteCard, { Note } from './NoteCard'
 export const [notes, setNotes] = createSignal([] as Note[]);
 
 const Notes: Component = () => {
-    const [columns, setColumns] = createSignal("")
-    // const noteColors = ["bg-blue-400", "bg-red-400", "bg-green-400", "bg-yellow-400", "bg-gray-400"];
-    // const noteTexts = [
-    //     "this is a short text",
-    //     "this is a medium text. A short description that the user would input",
-    //     "this is a long text. I dont know why anyone would want to write a note this long, but we must cover all use cases. AAAAAAAAAAAAAAAAAAAA! open source more like source"
-    // ]
-    //onMount(() => {
-        // for (var i=0;i<10;i++){
-        //     let note = {
-        //         text: noteTexts[Math.floor(Math.random()*noteTexts.length)],
-        //         color: noteColors[Math.floor(Math.random()*noteColors.length)],
-        //         id: Math.random().toString(36).slice(2, 13)
-        //     }
-        //     setNotes([note, ...notes()]);
-        // }
-        // generates sample notes for testing
-    //});
+  onMount(async () => {
+    if(localStorage.getItem("token")){
+      const token = localStorage.getItem("token")
+      await fetch("http://localhost:3009/notes", {
+        method: "GET", 
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token
+        },
+        redirect: "follow"
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        setNotes([])
+        for(var i=0;i<data.length;i++){
+          let note = {
+            text: data[i].contents,
+            color: data[i].color,
+            id: data[i].number
+          }
+          console.log("adding note")
+          setNotes([note, ...notes()]);
+        }
+      })
+    }
+  });
+  const [columns, setColumns] = createSignal("")
   return (
     <div class="m-5 col-gap">
         <For each={notes()}>{(note, i) =>
